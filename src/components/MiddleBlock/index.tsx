@@ -9,15 +9,10 @@ interface MiddleBlockProps {
   content: string;
   button: string;
   t: TFunction;
+  onButtonClick?: () => void;
 }
 
-const MiddleBlock = ({ title, content, button, t }: MiddleBlockProps) => {
-  const scrollTo = (id: string) => {
-    const element = document.getElementById(id) as HTMLDivElement;
-    element.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
+const MiddleBlock = ({ title, content, button, t, onButtonClick }: MiddleBlockProps) => {
   return (
     <MiddleBlockSection>
       <Slide direction="up" triggerOnce>
@@ -27,7 +22,7 @@ const MiddleBlock = ({ title, content, button, t }: MiddleBlockProps) => {
               <h6>{t(title)}</h6>
               <Content>{t(content)}</Content>
               {button && (
-                <Button name="submit" onClick={() => scrollTo("mission")}>
+                <Button name="submit" onClick={typeof onButtonClick === "function" ? onButtonClick : () => {}}>
                   {t(button)}
                 </Button>
               )}

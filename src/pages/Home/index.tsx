@@ -13,6 +13,9 @@ const ScrollToTop = lazy(() => import("../../common/ScrollToTop"));
 const ContentBlock = lazy(() => import("../../components/ContentBlock"));
 
 const Home = () => {
+  const handleMiddleBlockClick = () => {
+    window.location.href = "/document";
+  };
   return (
     <Container>
       <ScrollToTop />
@@ -28,6 +31,7 @@ const Home = () => {
         title={MiddleBlockContent.title}
         content={MiddleBlockContent.text}
         button={MiddleBlockContent.button}
+        onButtonClick={handleMiddleBlockClick}
       />
       <ContentBlock
         direction="left"
@@ -41,6 +45,7 @@ const Home = () => {
         direction="right"
         title={MissionContent.title}
         content={MissionContent.text}
+        button={[{title:MissionContent.button}]}
         icon="product-launch.svg"
         id="mission"
       />

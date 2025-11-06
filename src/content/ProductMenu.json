@@ -1,7 +1,8 @@
 {
   "options": [
-    { "key": "model", "label": "Model" },
     { "key": "arviewer", "label": "ArViewer" },
+    { "key": "model", "label": "Model" },
+    { "key": "arxmlEditor", "label": "ArXML Editor" },
     { "key": "continue", "label": "Continue" }
   ]
 }

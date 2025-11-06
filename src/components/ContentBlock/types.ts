@@ -17,6 +17,11 @@ export interface ContentBlockProps {
         title: string;
         color: string;
       }
+      |   {
+        title: string;
+        color?: undefined;
+        link?: string;
+      }
   )[];
   t: TFunction;
   id: string;

@@ -45,7 +45,7 @@ const Home = () => {
         direction="right"
         title={MissionContent.title}
         content={MissionContent.text}
-        button={[{title:MissionContent.button}]}
+        button={MissionContent.button}
         icon="product-launch.svg"
         id="mission"
       />

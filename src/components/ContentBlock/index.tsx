@@ -1,4 +1,5 @@
 import { Row, Col } from "antd";
+import { MoreOutlined } from "@ant-design/icons";
 import { Fade } from "react-awesome-reveal";
 import { withTranslation } from "react-i18next";
 
@@ -57,6 +58,7 @@ const ContentBlock = ({
                         item: {
                           color?: string;
                           title: string;
+                          link?: string;
                         },
                         id: number
                       ) => {
@@ -64,8 +66,19 @@ const ContentBlock = ({
                           <Button
                             key={id}
                             color={item.color}
-                            onClick={() => scrollTo("about")}
+                            onClick={() => {
+                              if (item.link) {
+                                window.open(item.link, '_blank');
+                              } else {
+                                scrollTo("about");
+                              }
+                            }}
                           >
+                            {item.title === "GitHub" && (
+                              <span style={{ marginRight: 6 }}>
+                                <SvgIcon src="github-icon-white.svg" width="20px" height="20px" />
+                              </span>
+                            )}
                             {t(item.title)}
                           </Button>
                         );

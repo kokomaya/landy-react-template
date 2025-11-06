@@ -4,6 +4,9 @@
   "button": [
     {
       "title": "Explore"
+    },
+    {
+      "title": "GitHub", "link": "https://github-am.int.automotive-wan.com/uie63794/ArViewer" 
     }
   ]
 }

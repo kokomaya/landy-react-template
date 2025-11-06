@@ -1,17 +1,59 @@
 {
-  "需求编辑": [
-    { "title": "自定义字段", "description": "用户可根据实际需求自定义字段类型和内容。" },
-    { "title": "AI辅助编辑", "description": "AI自动优化和补全需求内容，提高编辑效率。" }
-  ],
-  "需求映射": [
-    { "title": "需求分层映射", "description": "支持将需求按视图分层映射，结构清晰。" },
-    { "title": "AI智能映射", "description": "AI自动识别并建立需求间的关联。" }
-  ],
-  "插件开发": [
-    { "title": "子插件开发", "description": "用户可自主开发和集成功能插件，扩展系统能力。" }
-  ],
-  "协作与导出": [
-    { "title": "AI评审", "description": "AI自动评审需求，发现潜在问题。" },
-    { "title": "多格式导出", "description": "支持导出为多种格式，便于集成和分享。" }
-  ]
+  "产品简介": {
+    "title": "ARViewer 产品介绍",
+    "description": "ARViewer 是面向 AUTOSAR 标准的 ARXML 文件解析与需求管理工具，集成 VS Code 扩展与 Web 可视化界面，支持需求编辑、映射、插件扩展、协作与导出。"
+  },
+  "环境准备与安装": {
+    "Node.js": "推荐 18.x 及以上，安装 https://nodejs.org/",
+    "VSCode": "安装最新版 VS Code，推荐安装 vsce 工具 npm install -g vsce",
+    "Python": "推荐 3.12 及以上，建议使用虚拟环境 python -m venv venv; .\\venv\\Scripts\\Activate.ps1",
+    "依赖安装": [
+      "npm install （根目录）",
+      "pip install -r requirements.txt （autosar_parser 目录）"
+    ]
+  },
+  "构建与启动": {
+    "前端构建": [
+      "npm run build （一次性构建）",
+      "npm run watch （开发模式自动编译）"
+    ],
+    "扩展调试": [
+      "VS Code F5 启动扩展主机，调试 extension.ts"],
+    "Web服务启动": [
+      "cd docs; python -m http.server 8080 （浏览器访问 http://localhost:8080）"
+    ],
+    "Python脚本": [
+      "cd autosar_parser; python arxml_parser_test.py （运行解析脚本）"
+    ]
+  },
+  "页面与功能": {
+    "需求编辑": [
+      { "title": "自定义字段", "description": "支持自定义需求字段类型和内容，满足多样化项目需求。" },
+      { "title": "AI辅助编辑", "description": "AI自动优化、补全需求内容，提高编辑效率。" }
+    ],
+    "需求映射": [
+      { "title": "分层映射", "description": "支持需求分层、结构化映射，便于管理。" },
+      { "title": "AI智能映射", "description": "AI自动识别需求间关联，快速建立映射关系。" }
+    ],
+    "插件开发": [
+      { "title": "子插件开发", "description": "支持用户自定义开发、集成插件，扩展系统能力。" },
+      { "title": "插件管理", "description": "支持插件安装、卸载、重载等操作。" }
+    ],
+    "协作与导出": [
+      { "title": "AI评审", "description": "AI自动评审需求，发现潜在问题。" },
+      { "title": "多格式导出", "description": "支持导出为 JSON、XML、Excel、Markdown、PDF 等格式，便于集成和分享。" }
+    ]
+  },
+  "页面操作指引": {
+    "项目资源管理": "侧边栏 Project Explorer 支持新建、删除、打开需求映射文件（.rm.json），可一键加载和管理项目需求。",
+    "需求映射页面": "支持拖拽文件、分层编辑、AI辅助、需求分组、导出等操作。",
+    "Webview 操作": "通过命令面板或侧边栏打开需求映射 Webview，支持实时编辑和数据同步。",
+    "插件管理": "在 Webview 内可安装、卸载、重载子插件，扩展功能。"
+  },
+  "常见问题与支持": {
+    "Node.js依赖": "如扩展无法激活，请确认 Node.js 依赖已安装，VS Code 版本符合要求。",
+    "Python依赖": "如脚本报错，请确认 Python 依赖已正确安装。",
+    "端口占用": "如 Web 服务无法启动，请检查端口是否被占用或权限问题。",
+    "更多帮助": "如遇其他问题，请通过 Issue 或产品支持团队反馈。"
+  }
 }

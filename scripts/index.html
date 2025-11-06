@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SVG 转 PNG</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        margin-top: 80px;
+      }
+      button {
+        font-size: 16px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      #log {
+        margin-top: 20px;
+        white-space: pre-wrap;
+        text-align: left;
+        width: 80%;
+        margin-inline: auto;
+        background: #f2f2f2;
+        padding: 10px;
+        border-radius: 8px;
+        height: 200px;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SVG 转 PNG 工具</h1>
+    <button id="choose-folder">选择文件夹</button>
+    <div id="log"></div>
+    <script src="renderer.js"></script>
+  </body>
+</html>

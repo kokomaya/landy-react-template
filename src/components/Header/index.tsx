@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import ProductMenu from "../../content/ProductMenu.json";
 import { Row, Col, Drawer } from "antd";
 import { withTranslation, TFunction } from "react-i18next";
 import Container from "../../common/Container";
 import { SvgIcon } from "../../common/SvgIcon";
+import { DownOutlined } from "@ant-design/icons";
 import { Button } from "../../common/Button";
 import {
   HeaderSection,
@@ -14,6 +16,8 @@ import {
   Label,
   Outline,
   Span,
+  DropdownMenu,
+  DropdownMenuItem,
 } from "./styles";
 
 const Header = ({ t }: { t: TFunction }) => {
@@ -23,36 +27,60 @@ const Header = ({ t }: { t: TFunction }) => {
     setVisibility(!visible);
   };
 
-  const MenuItem = () => {
-    const scrollTo = (id: string) => {
-      const element = document.getElementById(id) as HTMLDivElement;
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
-      setVisibility(false);
-    };
-    return (
-      <>
-        <CustomNavLinkSmall onClick={() => scrollTo("about")}>
-          <Span>{t("About")}</Span>
-        </CustomNavLinkSmall>
-        <CustomNavLinkSmall onClick={() => scrollTo("mission")}>
-          <Span>{t("Motivation")}</Span>
-        </CustomNavLinkSmall>
-        <CustomNavLinkSmall onClick={() => scrollTo("product")}>
-          <Span>{t("Product")}</Span>
-        </CustomNavLinkSmall>
-        <CustomNavLinkSmall
-          style={{ width: "180px" }}
-          onClick={() => scrollTo("contact")}
-        >
+  const [productMenuOpen, setProductMenuOpen] = useState(false);
+  const productMenuRef = useRef<HTMLDivElement>(null);
+  const scrollTo = (id: string) => {
+    const element = document.getElementById(id) as HTMLDivElement;
+    element.scrollIntoView({ behavior: "smooth" });
+    setVisibility(false);
+    setProductMenuOpen(false);
+  };
+  const handleProductClick = () => {
+    setProductMenuOpen((open) => !open);
+  };
+  const handleMenuOptionClick = (key: string) => {
+    setProductMenuOpen(false);
+    // 示例：滚动到对应section
+    scrollTo(key);
+  };
+  const MenuItem = () => (
+    <>
+      <CustomNavLinkSmall onClick={() => scrollTo("about")}> 
+        <Span>{t("About")}</Span>
+      </CustomNavLinkSmall>
+      <CustomNavLinkSmall onClick={() => scrollTo("mission")}> 
+        <Span>{t("Motivation")}</Span>
+      </CustomNavLinkSmall>
+      <div style={{ position: "relative", display: "inline-block" }} ref={productMenuRef}>
+        <CustomNavLinkSmall onClick={handleProductClick} style={{ userSelect: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
           <Span>
-            <Button>{t("Contact")}</Button>
+            {t("Product")}
+            <DownOutlined style={{ fontSize: 12, marginLeft: 2, transition: "transform 0.2s", transform: productMenuOpen ? "rotate(180deg)" : "none" }} />
           </Span>
         </CustomNavLinkSmall>
-      </>
-    );
-  };
+        {productMenuOpen && (
+          <DropdownMenu>
+            {ProductMenu.options.map((opt: { key: string; label: string }) => (
+              <DropdownMenuItem
+                key={opt.key}
+                onClick={() => handleMenuOptionClick(opt.key)}
+              >
+                {opt.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenu>
+        )}
+      </div>
+      <CustomNavLinkSmall
+        style={{ width: "180px" }}
+        onClick={() => scrollTo("contact")}
+      >
+        <Span>
+          <Button>{t("Contact")}</Button>
+        </Span>
+      </CustomNavLinkSmall>
+    </>
+  );
 
   return (
     <HeaderSection>

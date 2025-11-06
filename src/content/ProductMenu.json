@@ -1,0 +1,7 @@
+{
+  "options": [
+    { "key": "model", "label": "Model" },
+    { "key": "arviewer", "label": "ArViewer" },
+    { "key": "continue", "label": "Continue" }
+  ]
+}

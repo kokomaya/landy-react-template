@@ -24,10 +24,12 @@ const Home = () => {
         title={MiddleBlockContent.title}
         content={MiddleBlockContent.text}
         button={MiddleBlockContent.button}
+        video={MiddleBlockContent.video}
+        direction="right"
         onButtonClick={handleMiddleBlockClick}
       />
       <ContentBlock
-        direction="right"
+        direction="left"
         title={IntroContent.title}
         content={IntroContent.text}
         button={IntroContent.button}

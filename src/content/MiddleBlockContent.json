@@ -2,6 +2,7 @@
 {
   "title": "NL2Autosar",
   "text": "NL2Autosar 是面向 AUTOSAR 标准的 ARXML 文件解析与需求管理工具，集成 VS Code 扩展与 Web 可视化界面。点击下方按钮，快速了解产品功能与使用指引。",
+  "video": "/video/nl2autosar_intro.mp4",
   "button": {
     "title": "Get Started",
     "link": "/document"

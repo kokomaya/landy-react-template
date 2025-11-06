@@ -2,7 +2,7 @@ import { lazy } from "react";
 import IntroContent from "../../content/IntroContent.json";
 import MiddleBlockContent from "../../content/MiddleBlockContent.json";
 import AboutContent from "../../content/AboutContent.json";
-import MissionContent from "../../content/MissionContent.json";
+import ArViewerContent from "../../content/ArViewerContent.json";
 import ProductContent from "../../content/ProductContent.json";
 import ContactContent from "../../content/ContactContent.json";
 
@@ -19,6 +19,13 @@ const Home = () => {
   return (
     <Container>
       <ScrollToTop />
+
+      <MiddleBlock
+        title={MiddleBlockContent.title}
+        content={MiddleBlockContent.text}
+        button={MiddleBlockContent.button}
+        onButtonClick={handleMiddleBlockClick}
+      />
       <ContentBlock
         direction="right"
         title={IntroContent.title}
@@ -27,25 +34,13 @@ const Home = () => {
         icon="developer.svg"
         id="intro"
       />
-      <MiddleBlock
-        title={MiddleBlockContent.title}
-        content={MiddleBlockContent.text}
-        button={MiddleBlockContent.button}
-        onButtonClick={handleMiddleBlockClick}
-      />
-      <ContentBlock
-        direction="left"
-        title={AboutContent.title}
-        content={AboutContent.text}
-        section={AboutContent.section}
-        icon="graphs.svg"
-        id="about"
-      />
+
+
       <ContentBlock
         direction="right"
-        title={MissionContent.title}
-        content={MissionContent.text}
-        button={MissionContent.button}
+        title={ArViewerContent.title}
+        content={ArViewerContent.text}
+        button={ArViewerContent.button}
         icon="product-launch.svg"
         id="mission"
       />
@@ -55,6 +50,14 @@ const Home = () => {
         content={ProductContent.text}
         icon="waving.svg"
         id="product"
+      />
+      <ContentBlock
+        direction="left"
+        title={AboutContent.title}
+        content={AboutContent.text}
+        section={AboutContent.section}
+        icon="graphs.svg"
+        id="about"
       />
       <Contact
         title={ContactContent.title}

@@ -41,6 +41,13 @@ export const DropdownMenuItem = styled.div`
   }
 `;
 export const HeaderSection = styled("header")`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(24,33,109,0.06);
   padding: 1rem 0.5rem;
 
   .ant-row-space-between {

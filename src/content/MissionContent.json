@@ -1,8 +1,0 @@
-{
-  "title": "localization & customization & AI & More",
-  "text": "你是否希望你的工具能够更好地适应你的语言和工作流程？ARViewer 提供强大的本地化支持(基于vscode插件)和高度的自定义选项（自定义需求格式与子插件），结合LLM大模型，帮助你提升工作效率和协作体验。",
-  "button":  [
-    { "title": "More" },
-    { "title": "GitHub", "link": "https://github-am.int.automotive-wan.com/uie63794/ArViewer" }
-  ]
-}

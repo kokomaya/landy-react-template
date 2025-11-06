@@ -3,7 +3,7 @@
   "text": "ARViewer是一款结合AI能力的需求编辑与映射工具，支持用户自定义字段和自主开发子插件。AI可协助需求编辑、映射、评审等流程，支持多种格式导出，助力高效管理和可视化需求，提升产品开发与协作效率。",
   "button": [
     {
-      "title": "Explore"
+      "title": "Explore", "link": "/document"
     },
     {
       "title": "GitHub", "link": "https://github-am.int.automotive-wan.com/uie63794/ArViewer" 

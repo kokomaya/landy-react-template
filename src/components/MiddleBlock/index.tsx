@@ -7,12 +7,18 @@ import { MiddleBlockSection, Content, ContentWrapper } from "./styles";
 interface MiddleBlockProps {
   title: string;
   content: string;
-  button: string;
+  button: { title: string; link: string };
   t: TFunction;
   onButtonClick?: () => void;
 }
 
 const MiddleBlock = ({ title, content, button, t, onButtonClick }: MiddleBlockProps) => {
+  //   const scrollTo = (id: string) => {
+  //   const element = document.getElementById(id) as HTMLDivElement;
+  //   element.scrollIntoView({
+  //     behavior: "smooth",
+  //   });
+  // };
   return (
     <MiddleBlockSection>
       <Slide direction="up" triggerOnce>
@@ -22,8 +28,8 @@ const MiddleBlock = ({ title, content, button, t, onButtonClick }: MiddleBlockPr
               <h6>{t(title)}</h6>
               <Content>{t(content)}</Content>
               {button && (
-                <Button name="submit" onClick={typeof onButtonClick === "function" ? onButtonClick : () => {}}>
-                  {t(button)}
+                <Button name="submit" onClick={() => window.open(button.link, '_blank')}>
+                  {t(button.title)}
                 </Button>
               )}
             </Col>

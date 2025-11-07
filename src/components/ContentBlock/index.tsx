@@ -50,67 +50,62 @@ const ContentBlock = ({
             <ContentWrapper>
               <h6>{t(title)}</h6>
               <Content>{t(content)}</Content>
-              {direction === "right" ? (
+              {typeof button === "object" && button.length > 0 && (
                 <ButtonWrapper>
-                  {typeof button === "object" &&
-                    button.map(
-                      (
-                        item: {
-                          color?: string;
-                          title: string;
-                          link?: string;
-                        },
-                        id: number
-                      ) => {
-                        return (
-                          <Button
-                            key={id}
-                            color={item.color}
-                            onClick={() => {
-                              if (item.link) {
-                                window.open(item.link, '_blank');
-                              } else {
-                                scrollTo("about");
-                              }
-                            }}
-                          >
-                            {item.title === "GitHub" && (
-                              <span style={{ marginRight: 6 }}>
-                                <SvgIcon src="github-icon-white.svg" width="20px" height="20px" />
-                              </span>
-                            )}
-                            {t(item.title)}
-                          </Button>
-                        );
-                      }
-                    )}
+                  {button.map(
+                    (
+                      item: {
+                        color?: string;
+                        title: string;
+                        link?: string;
+                      },
+                      id: number
+                    ) => (
+                      <Button
+                        key={id}
+                        color={item.color}
+                        onClick={() => {
+                          if (item.link) {
+                            window.open(item.link, '_blank');
+                          } else {
+                            scrollTo("about");
+                          }
+                        }}
+                      >
+                        {item.title && item.title.includes("GitHub") && (
+                          <span style={{ marginRight: 6 }}>
+                            <SvgIcon src="github-icon-white.svg" width="20px" height="20px" />
+                          </span>
+                        )}
+                        {t(item.title)}
+                      </Button>
+                    )
+                  )}
                 </ButtonWrapper>
-              ) : (
+              )}
+              {typeof section === "object" && section.length > 0 && (
                 <ServiceWrapper>
                   <Row justify="space-between">
-                    {typeof section === "object" &&
-                      section.map(
-                        (
-                          item: {
-                            title: string;
-                            content: string;
-                            icon: string;
-                          },
-                          id: number
-                        ) => {
-                          return (
-                            <Col key={id} span={11}>
-                              <SvgIcon
-                                src={item.icon}
-                                width="60px"
-                                height="60px"
-                              />
-                              <MinTitle>{t(item.title)}</MinTitle>
-                              <MinPara>{t(item.content)}</MinPara>
-                            </Col>
-                          );
-                        }
-                      )}
+                    {section.map(
+                      (
+                        item: {
+                          title: string;
+                          content: string;
+                          icon: string;
+                        },
+                        id: number
+                      ) => (
+                        <Col key={id} span={11}>
+                          <SvgIcon
+                            src={item.icon}
+                            width="60px"
+                            height="60px"
+                          />
+                          <MinTitle>{t(item.title)}</MinTitle>
+                          <MinPara>{t(item.content)}</MinPara>
+                        </Col>
+                      )
+                    )}
                   </Row>
                 </ServiceWrapper>
               )}

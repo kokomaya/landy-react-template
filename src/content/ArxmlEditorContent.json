@@ -1,0 +1,13 @@
+{
+  "title": "ArxmlEditor: ArxmlEditor \nautosar配置文件的编辑工具",
+  "text": "ArxmlEditor 基于标准的arxml编辑库开发的arxml编辑工具，能够针对具体属性进行编辑，包括增删改查复制等操作，并进行了MCP封装。你可以在你的项目中集成该工具以实现arxml文件的可视化编辑。",
+  "button": [
+    {
+      "title": "Explore", "link": "/document"
+    },
+    {
+      "title": "GitHub-Library", "link": "https://github-ct.int.automotive-wan.com/uid87544/autosar_parser"
+    },
+    { "title": "GitHub-Editor", "link": "https://github-am.int.automotive-wan.com/uie63794/arxml_mcp" }
+  ]
+}

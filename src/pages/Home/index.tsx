@@ -1,10 +1,12 @@
 import { lazy } from "react";
-import IntroContent from "../../content/IntroContent.json";
+import AutosarLLM from "../../content/AutosarLLM.json";
 import MiddleBlockContent from "../../content/MiddleBlockContent.json";
 import AboutContent from "../../content/AboutContent.json";
 import ArViewerContent from "../../content/ArViewerContent.json";
-import ProductContent from "../../content/ProductContent.json";
+import Motivations from "../../content/Motivations.json";
 import ContactContent from "../../content/ContactContent.json";
+import ArxmlEditorContent from "../../content/ArxmlEditorContent.json";
+import ContinueContent from "../../content/ContinueContent.json";
 
 const Contact = lazy(() => import("../../components/ContactForm"));
 const MiddleBlock = lazy(() => import("../../components/MiddleBlock"));
@@ -28,36 +30,55 @@ const Home = () => {
         direction="right"
         onButtonClick={handleMiddleBlockClick}
       />
+
       <ContentBlock
         direction="left"
-        title={IntroContent.title}
-        content={IntroContent.text}
-        button={IntroContent.button}
-        icon="developer.svg"
-        id="intro"
-      />
-
-
-      <ContentBlock
-        direction="right"
         title={ArViewerContent.title}
         content={ArViewerContent.text}
         button={ArViewerContent.button}
-        icon="product-launch.svg"
-        id="mission"
+        icon="developer.svg"
+        id="arviewer"
       />
+
+      <ContentBlock
+        direction="right"
+        title={AutosarLLM.title}
+        content={AutosarLLM.text}
+        button={AutosarLLM.button}
+        icon="product-launch.svg"
+        id="autosarllm"
+      />
+
       <ContentBlock
         direction="left"
-        title={ProductContent.title}
-        content={ProductContent.text}
+        title={ArxmlEditorContent.title}
+        content={ArxmlEditorContent.text}
+        button={ArxmlEditorContent.button}
+        icon="developer.svg"
+        id="arxmleditor"
+      />
+
+      <ContentBlock
+        direction="right"
+        title={ContinueContent.title}
+        content={ContinueContent.text}
+        button={ContinueContent.button}
+        icon="developer.svg"
+        id="continue"
+      />
+
+      <ContentBlock
+        direction="left"
+        title={Motivations.title}
+        content={Motivations.text}
+        section={Motivations.section}
         icon="waving.svg"
         id="product"
       />
       <ContentBlock
-        direction="left"
+        direction="right"
         title={AboutContent.title}
         content={AboutContent.text}
-        section={AboutContent.section}
         icon="graphs.svg"
         id="about"
       />

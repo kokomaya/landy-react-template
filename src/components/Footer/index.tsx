@@ -75,9 +75,9 @@ const Footer = ({ t }: { t: TFunction }) => {
             <Col lg={10} md={10} sm={12} xs={12}>
               <Empty />
               <Language>{t("Address")}</Language>
-              <Para>Rancho Santa Margarita</Para>
-              <Para>2131 Elk Street</Para>
-              <Para>California</Para>
+              <Para>欧摩威软件系统开发（重庆）有限公司</Para>
+              <Para>悦来街道嘉材路17号</Para>
+              <Para>重庆市两江新区</Para>
             </Col>
             <Col lg={8} md={8} sm={12} xs={12}>
               <Title>{t("Company")}</Title>

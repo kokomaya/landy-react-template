@@ -1,0 +1,37 @@
+{
+  "title": "Motivations",
+  "text": "需求的编写与管理，需求的覆盖度及质量评估，需求的理解与追踪，配置的编辑与管理，代码的编写与补全，测试用例的编写与执行，这些都是AUTOSAR项目开发过程中不可或缺的环节。NL2Autosar 通过 AI 和智能工具，提升这些环节的效率和质量，帮助开发团队更好地应对复杂的项目需求和挑战。",
+  "section": [
+  {
+    "title": "网络问题",
+    "content": "适用DOORS或DNG等需求管理工具的项目，通常面临网络不稳定、访问缓慢。",
+    "icon": "notes.svg"
+  },
+  {
+    "title": "数据量与时间成本",
+    "content": "当在系统上处理大量数据时，往往需要消耗大量时间等待数据处理和服务器响应。",
+    "icon": "notes.svg"
+  },
+  {
+    "title": "一致性与覆盖度",
+    "content": "需求分解时，工程师通过人工方式进行需求的覆盖度和一致性检查，耗时且易出错，难以保证需求的完整性和准确性。",
+    "icon": "notes.svg"
+  },
+  {
+    "title": "工具功能限制",
+    "content": "大部分需求分解和review时，依赖于excel等工具， 无法使用AI辅助工具。",
+    "icon": "notes.svg"
+  },
+  {
+    "title": "license限制",
+    "content": "部分配置工具需要物理dongle或license服务器，给分布式团队带来不便。",
+    "icon": "notes.svg"
+  },
+  {
+    "title": "More...",
+    "content": "",
+    "icon": "notes.svg"
+  }
+  
+]
+}

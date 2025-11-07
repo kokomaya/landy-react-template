@@ -1,0 +1,14 @@
+{
+  "title": "AutosarLLM: AutosarLLM 将AUTOSAR需求映射到配置的大模型",
+  "text": "基于开源大模型Qwen3 4B进行微调的AUTOSAR需求到配置隐射模型，数据由专业的Autosar需求工程师标注，支持需求理解、映射功能，为需求到Autosar配置的应用开发提供了有力支持。",
+  "button": [
+    {
+      "title": "Explore", "link": "/document"
+    },
+    {
+      "title": "GitHub-dataset", "link": "https://github-am.int.automotive-wan.com/uie63794/autosar_davinci_dataset" 
+    },
+    { "title": "GitHub-training", "link": "https://github-am.int.automotive-wan.com/uif23728/autosar_llm_train" },
+    { "title": "GitHub-llamafactory", "link": "https://github.com/hiyouga/LLaMA-Factory" }
+  ]
+}

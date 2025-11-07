@@ -1,0 +1,12 @@
+{
+  "title": "Continue: Continue \n基于开源插件开发的vscode agent插件",
+  "text": "Continue 开源的 vscode agent 插件，提供与 github copilot 类似的功能，支持代码自动补全、智能提示等。二次开发后的插件支持 AutosarLLM 与 ArxmlEditor 的功能调用，是连接ARViewer, AutosarLLM 与 ArxmlEditor的“桥梁”。",
+  "button": [
+    {
+      "title": "Explore", "link": "/document"
+    },
+    {
+      "title": "GitHub-continue", "link": "https://github.com/kokomaya/continue/tree/develop/nlautosar"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 {
   "options": [
-    { "key": "arviewer", "label": "ArViewer" },
-    { "key": "model", "label": "Model" },
-    { "key": "arxmlEditor", "label": "ArXML Editor" },
+    { "key": "arviewer", "label": "ARViewer" },
+    { "key": "autosarllm", "label": "AutosarLLM" },
+    { "key": "arxmleditor", "label": "Arxml Editor" },
     { "key": "continue", "label": "Continue" }
   ]
 }

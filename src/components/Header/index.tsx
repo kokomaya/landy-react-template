@@ -54,8 +54,8 @@ const Header = ({ t }: { t: TFunction }) => {
   };
   const handleMenuOptionClick = (key: string) => {
     setProductMenuOpen(false);
-    // 示例：滚动到对应section
-    scrollTo(key);
+    // 跳转到对应产品文档页面
+    window.location.href = `/document/${key.toLowerCase()}`;
   };
   const MenuItem = () => (
     <>

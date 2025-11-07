@@ -1,0 +1,45 @@
+{
+  "产品简介": {
+    "title": "Continue 产品介绍",
+    "description": "Continue 是基于开源插件开发的 VSCode Agent，具备智能补全、代码提示等 AI 能力，支持 AutosarLLM 与 ArxmlEditor 功能调用，成为连接多工具的高效桥梁。"
+  },
+  "环境准备与安装": {
+    "Node.js": "推荐 18.x 及以上，安装 https://nodejs.org/",
+    "VSCode": "安装最新版 VS Code，推荐安装 vsce 工具 npm install -g vsce",
+    "Python": "推荐 3.12 及以上，建议使用虚拟环境 python -m venv venv; .\\venv\\Scripts\\Activate.ps1",
+    "依赖安装": [
+      "npm install （根目录）",
+      "pip install -r requirements.txt （autosar_parser 目录）"
+    ]
+  },
+  "构建与启动": {
+    "前端构建": [
+      "npm run build （一次性构建）",
+      "npm run watch （开发模式自动编译）"
+    ],
+    "扩展调试": [
+      "VS Code F5 启动扩展主机，调试 extension.ts"],
+    "Web服务启动": [
+      "cd docs; python -m http.server 8080 （浏览器访问 http://localhost:8080）"
+    ],
+    "Python脚本": [
+      "cd autosar_parser; python arxml_parser_test.py （运行解析脚本）"
+    ]
+  },
+  "页面与功能": {
+    "智能补全": [
+      { "title": "AI代码提示", "description": "智能补全与代码建议，提升开发效率。" },
+      { "title": "插件扩展", "description": "支持调用 AutosarLLM 与 ArxmlEditor 功能。" }
+    ],
+    "桥梁功能": [
+      { "title": "多工具集成", "description": "连接 ARViewer、AutosarLLM、ArxmlEditor，实现协同工作。" },
+      { "title": "开源生态", "description": "基于开源项目，易于二次开发和扩展。" }
+    ]
+  },
+  "常见问题与支持": {
+    "Node.js依赖": "如扩展无法激活，请确认 Node.js 依赖已安装，VS Code 版本符合要求。",
+    "Python依赖": "如脚本报错，请确认 Python 依赖已正确安装。",
+    "端口占用": "如 Web 服务无法启动，请检查端口是否被占用或权限问题。",
+    "更多帮助": "如遇其他问题，请通过 Issue 或产品支持团队反馈。"
+  }
+}

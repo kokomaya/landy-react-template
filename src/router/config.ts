@@ -5,7 +5,7 @@ const routes = [
     component: "Home",
   },
   {
-    path: "/document",
+    path: ["/document", "/document/:id"],
     exact: true,
     component: "DocumentPage",
   },

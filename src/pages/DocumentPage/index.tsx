@@ -1,6 +1,10 @@
 
 import React, { useState } from "react";
-import DocumentContent from "../../content/DocumentContent.json";
+import { useParams } from "react-router-dom";
+import ArViewerDocumentContent from "../../content/ArViewerDocumentContent.json";
+import AutosarLLMDocumentContent from "../../content/AutosarLLMDocumentContent.json";
+import ArxmlEditorDocumentContent from "../../content/ArxmlEditorDocumentContent.json";
+import ContinueDocumentContent from "../../content/ContinueDocumentContent.json";
 import * as styles from "./styles";
 
 
@@ -64,20 +68,30 @@ const renderContent = (content: any) => {
   return null;
 };
 
+const documentMap: Record<string, any> = {
+  arviewer: ArViewerDocumentContent,
+  autosarllm: AutosarLLMDocumentContent,
+  arxmleditor: ArxmlEditorDocumentContent,
+  continue: ContinueDocumentContent,
+};
+
 const DocumentPage = () => {
-  const [selectedView, setSelectedView] = useState<keyof typeof DocumentContent>(Object.keys(DocumentContent)[0] as keyof typeof DocumentContent);
-  const content = DocumentContent[selectedView];
+  const { id } = useParams<{ id?: string }>();
+  const docId = id ? id.toLowerCase() : "arviewer";
+  const docContent = documentMap[docId] || ArViewerDocumentContent;
+  const [selectedView, setSelectedView] = useState<keyof typeof docContent>(Object.keys(docContent)[0] as keyof typeof docContent);
+  const content = docContent[selectedView];
 
   return (
     <styles.Outer>
       <styles.DocLayout>
         <styles.DocSidebar>
           <styles.DocSidebarTitle>目录</styles.DocSidebarTitle>
-          {Object.keys(DocumentContent).map((view) => (
+          {Object.keys(docContent).map((view) => (
             <styles.DocSidebarItem
               key={view}
               active={selectedView === view}
-              onClick={() => setSelectedView(view as keyof typeof DocumentContent)}
+              onClick={() => setSelectedView(view as keyof typeof docContent)}
             >
               {view}
             </styles.DocSidebarItem>

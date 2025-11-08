@@ -2,16 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>SVG 转 PNG</title>
+    <title>SVG 转 PNG / PNG 转 SVG 工具</title>
     <style>
       body {
         font-family: sans-serif;
         text-align: center;
-        margin-top: 80px;
+        margin-top: 50px;
       }
       button {
         font-size: 16px;
         padding: 10px 20px;
+        margin: 5px;
         cursor: pointer;
       }
       #log {
@@ -23,14 +24,21 @@
         background: #f2f2f2;
         padding: 10px;
         border-radius: 8px;
-        height: 200px;
+        height: 300px;
         overflow-y: auto;
       }
     </style>
   </head>
   <body>
-    <h1>SVG 转 PNG 工具</h1>
-    <button id="choose-folder">选择文件夹</button>
+    <h1>SVG 转 PNG / PNG 转 SVG 工具</h1>
+    <div>
+      <button id="choose-folder">选择 SVG 文件夹</button>
+      <button id="choose-files">选择 SVG 文件</button>
+    </div>
+    <div>
+      <button id="choose-png-folder">选择 PNG 文件夹</button>
+      <button id="choose-png-files">选择 PNG 文件</button>
+    </div>
     <div id="log"></div>
     <script src="renderer.js"></script>
   </body>

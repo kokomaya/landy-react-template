@@ -54,7 +54,7 @@ const Home = () => {
         title={ArxmlEditorContent.title}
         content={ArxmlEditorContent.text}
         button={ArxmlEditorContent.button}
-        icon="developer.svg"
+        icon="robot-come-out-with-pad.svg"
         id="arxmleditor"
       />
 
@@ -63,7 +63,7 @@ const Home = () => {
         title={ContinueContent.title}
         content={ContinueContent.text}
         button={ContinueContent.button}
-        icon="developer.svg"
+        icon="people-doing-leisure-activities.svg"
         id="continue"
       />
 

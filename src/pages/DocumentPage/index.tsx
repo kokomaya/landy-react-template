@@ -1,5 +1,8 @@
 
 import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useParams } from "react-router-dom";
 import ArViewerDocumentContent from "../../content/ArViewerDocumentContent.json";
 import AutosarLLMDocumentContent from "../../content/AutosarLLMDocumentContent.json";
@@ -8,40 +11,51 @@ import ContinueDocumentContent from "../../content/ContinueDocumentContent.json"
 import * as styles from "./styles";
 
 
-const renderContent = (content: any) => {
-  // 字符串直接渲染
-  if (typeof content === "string") {
-    return <styles.CardDesc>{content}</styles.CardDesc>;
-  }
-  // 数组：可能是命令列表或功能卡片
-  if (Array.isArray(content)) {
-    // 判断是否为功能卡片（对象数组）
-    if (content.length > 0 && typeof content[0] === "object") {
+const markdownComponents = {
+  p: styles.CardDesc,
+  code({node, inline, className, children, ...props}: any) {
+    // 支持无语言标记的代码块
+    const match = /language-(\w+)/.exec(className || "");
+    if (!inline) {
       return (
-        <styles.CardList>
-          {content.map((item: any, idx: number) => (
-            <styles.Card key={item.title || idx}>
-              {item.title && <styles.CardTitle>{item.title}</styles.CardTitle>}
-              {item.description && <styles.CardDesc>{item.description}</styles.CardDesc>}
-              {!item.title && typeof item === "string" && <styles.CardDesc>{item}</styles.CardDesc>}
-            </styles.Card>
-          ))}
-        </styles.CardList>
+        <SyntaxHighlighter
+          style={oneDark}
+          language={match ? match[1] : undefined}
+          PreTag="div"
+          {...props}
+        >
+          {String(children).replace(/\n$/, "")}
+        </SyntaxHighlighter>
       );
     }
-    // 普通字符串数组
+    return <code className={className} {...props}>{children}</code>;
+  }
+};
+
+const renderContent = (content: any): React.ReactNode => {
+  // 字符串直接渲染为 Markdown
+  if (typeof content === "string") {
+    return <ReactMarkdown components={markdownComponents}>{content}</ReactMarkdown>;
+  }
+  // 数组：递归渲染每个元素（支持字符串、对象、数组）
+  if (Array.isArray(content)) {
+    // 如果数组全是字符串，则合并为一个 markdown 块
+    if (content.every((item) => typeof item === "string")) {
+      return <ReactMarkdown components={markdownComponents}>{content.join("\n\n")}</ReactMarkdown>;
+    }
+    // 否则递归渲染每个元素
     return (
-      <ul>
-        {content.map((item: string, idx: number) => (
-          <li key={idx}><styles.CardDesc>{item}</styles.CardDesc></li>
+      <>
+        {content.map((item: any, idx: number) => (
+          <div key={idx}>{renderContent(item)}</div>
         ))}
-      </ul>
+      </>
     );
   }
   // 对象：分组或键值对
-  if (typeof content === "object") {
+  if (typeof content === "object" && content !== null) {
     // 特殊处理页面与功能分组
-    if (Object.values(content).length > 0 && typeof Object.values(content)[0] === "object") {
+    if (Object.values(content).length > 0 && typeof Object.values(content)[0] === "object" && !content.title && !content.description) {
       return Object.entries(content).map(([group, value]) => (
         <div key={group} style={{marginBottom: 32}}>
           <styles.DocMainTitle>{group}</styles.DocMainTitle>
@@ -53,7 +67,9 @@ const renderContent = (content: any) => {
     return (
       <>
         {content.title && <styles.CardTitle>{content.title}</styles.CardTitle>}
-        {content.description && <styles.CardDesc>{content.description}</styles.CardDesc>}
+        {content.description && (Array.isArray(content.description)
+          ? renderContent(content.description)
+          : <ReactMarkdown components={markdownComponents}>{content.description}</ReactMarkdown>)}
         {Object.entries(content).map(([key, value]) => (
           key !== "title" && key !== "description" ? (
             <div key={key} style={{marginBottom: 16}}>
@@ -79,7 +95,9 @@ const DocumentPage = () => {
   const { id } = useParams<{ id?: string }>();
   const docId = id ? id.toLowerCase() : "arviewer";
   const docContent = documentMap[docId] || ArViewerDocumentContent;
-  const [selectedView, setSelectedView] = useState<keyof typeof docContent>(Object.keys(docContent)[0] as keyof typeof docContent);
+  //const [selectedView, setSelectedView] = useState<keyof typeof docContent>(Object.keys(docContent)[0] as keyof typeof docContent);
+  const [selectedView, setSelectedView] = useState<string>(Object.keys(docContent)[0]);
+
   const content = docContent[selectedView];
 
   return (
@@ -91,7 +109,7 @@ const DocumentPage = () => {
             <styles.DocSidebarItem
               key={view}
               active={selectedView === view}
-              onClick={() => setSelectedView(view as keyof typeof docContent)}
+              onClick={() =>  setSelectedView(String(view))}
             >
               {view}
             </styles.DocSidebarItem>

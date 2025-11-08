@@ -58,6 +58,9 @@ const ContentBlock = ({
                         color?: string;
                         title: string;
                         link?: string;
+                        icon?: string;
+                        width?: string;
+                        height?: string;
                       },
                       id: number
                     ) => (
@@ -72,9 +75,9 @@ const ContentBlock = ({
                           }
                         }}
                       >
-                        {item.title && item.title.includes("GitHub") && (
+                        {item.icon && (
                           <span style={{ marginRight: 6 }}>
-                            <SvgIcon src="github-icon-white.svg" width="20px" height="20px" />
+                            <SvgIcon src={item.icon} width={item.width && item.width || "20px"} height={item.height && item.height || "20px"} />
                           </span>
                         )}
                         {t(item.title)}

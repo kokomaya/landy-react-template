@@ -6,8 +6,8 @@
       "title": "Explore", "link": "/document"
     },
     {
-      "title": "GitHub-Library", "link": "https://github-ct.int.automotive-wan.com/uid87544/autosar_parser"
+      "title": "GitHub-Library", "link": "https://github-ct.int.automotive-wan.com/uid87544/autosar_parser" ,"icon": "github-icon-white.svg"
     },
-    { "title": "GitHub-Editor", "link": "https://github-am.int.automotive-wan.com/uie63794/arxml_mcp" }
+    { "title": "GitHub-Editor", "link": "https://github-am.int.automotive-wan.com/uie63794/arxml_mcp" ,"icon": "github-icon-white.svg" }
   ]
 }

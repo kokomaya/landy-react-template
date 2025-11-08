@@ -3,6 +3,8 @@
   "text": "ARViewer是一款结合AI能力的需求编辑与映射工具，支持用户自定义字段和自主开发子插件。AI可协助需求编辑、映射、评审等流程，支持多种格式导出，助力高效管理和可视化需求，提升产品开发与协作效率。",
   "button":  [
     { "title": "Explore" },
-    { "title": "GitHub", "link": "https://github-am.int.automotive-wan.com/uie63794/ArViewer" }
+    { "title": "GitHub", "link": "https://github-am.int.automotive-wan.com/uie63794/ArViewer" ,"icon": "github-icon-white.svg" },
+    { "title": "Try VIO API", "link": "https://contivity.aws3116.ec1.aws.automotive.cloud/" ,"icon": "vio_logo_4.svg", "height": "30px", "width": "30px" },
+    { "title": "Try ReqNet", "link": "https://aireq-webapp.datalab.aws.automotive.cloud/extraction", "icon": "reqnet.svg","height": "25px", "width": "80px" }
   ]
 }

@@ -6,9 +6,9 @@
       "title": "Explore", "link": "/document"
     },
     {
-      "title": "GitHub-dataset", "link": "https://github-am.int.automotive-wan.com/uie63794/autosar_davinci_dataset" 
+      "title": "GitHub-dataset", "link": "https://github-am.int.automotive-wan.com/uie63794/autosar_davinci_dataset"  ,"icon": "github-icon-white.svg"
     },
-    { "title": "GitHub-training", "link": "https://github-am.int.automotive-wan.com/uif23728/autosar_llm_train" },
-    { "title": "GitHub-llamafactory", "link": "https://github.com/hiyouga/LLaMA-Factory" }
+    { "title": "GitHub-training", "link": "https://github-am.int.automotive-wan.com/uif23728/autosar_llm_train" ,"icon": "github-icon-white.svg" },
+    { "title": "GitHub-llamafactory", "link": "https://github.com/hiyouga/LLaMA-Factory" ,"icon": "github-icon-white.svg" }
   ]
 }

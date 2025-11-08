@@ -6,7 +6,7 @@
       "title": "Explore", "link": "/document"
     },
     {
-      "title": "GitHub-continue", "link": "https://github.com/kokomaya/continue/tree/develop/nlautosar"
+      "title": "GitHub-continue", "link": "https://github.com/kokomaya/continue/tree/develop/nlautosar" ,"icon": "github-icon-white.svg"
     }
   ]
 }

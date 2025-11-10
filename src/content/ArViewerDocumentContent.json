@@ -1,17 +1,15 @@
 {
   "产品简介": {
-    "title": "ARViewer 产品介绍",
+    "title": "ARViewer 介绍",
     "description": [
       "### 简介",
       "ARViewer 是面向 AUTOSAR 标准的 ARXML 文件解析与需求管理工具，集成 VS Code 扩展与 Web 可视化界面，支持需求编辑、映射、插件扩展、协作与导出。",
-      "\n- 需求编辑：支持自定义字段、AI辅助编辑，提高需求编写效率。\n- 需求映射：支持分层映射、AI智能映射，快速建立需求关系。\n- 插件开发：支持子插件开发与管理，扩展系统功能。\n- 协作与导出：支持AI评审、多格式导出，便于团队协作与分享。\n"
-
+      "\n- **需求编辑**：支持自定义字段、AI辅助编辑，提高需求编写效率。\n- **需求映射**：支持分层映射、AI智能映射，快速建立需求关系。\n- **插件开发**：支持子插件开发与管理，扩展系统功能。\n- **协作与导出**：支持AI评审、多格式导出，便于团队协作与分享。\n- **本地编辑**：支持在本地编辑管理需求，按定义格式导出后可直接导入DNG和DOORS等需求管理系统。\n"
     ]
   },
   "环境准备与安装": {
     "Node.js": "推荐 18.x 及以上，安装 https://nodejs.org/",
     "VSCode": "安装最新版 VS Code，推荐安装 vsce 工具 npm install -g vsce",
-    "Python": "推荐 3.12 及以上，建议使用虚拟环境 python -m venv venv; .\\venv\\Scripts\\Activate.ps1",
     "依赖安装": [
       "`npm install #（根目录）`",
       "```pip install -r requirements.txt （autosar_parser 目录）```"

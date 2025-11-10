@@ -1,5 +1,4 @@
 import { Row, Col } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
 import { Fade } from "react-awesome-reveal";
 import { withTranslation } from "react-i18next";
 
@@ -77,7 +76,12 @@ const ContentBlock = ({
                       >
                         {item.icon && (
                           <span style={{ marginRight: 6 }}>
-                            <SvgIcon src={item.icon} width={item.width && item.width || "20px"} height={item.height && item.height || "20px"} />
+                            <SvgIcon
+                              src={item.icon}
+                              width={item.width || "20px"}
+                              height={item.height || "20px"}
+                            />
+
                           </span>
                         )}
                         {t(item.title)}

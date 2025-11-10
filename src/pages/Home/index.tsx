@@ -73,7 +73,7 @@ const Home = () => {
         content={Motivations.text}
         section={Motivations.section}
         icon="waving.svg"
-        id="product"
+        id="motivations"
       />
       <ContentBlock
         direction="right"

@@ -9,6 +9,7 @@ import AutosarLLMDocumentContent from "../../content/AutosarLLMDocumentContent.j
 import ArxmlEditorDocumentContent from "../../content/ArxmlEditorDocumentContent.json";
 import ContinueDocumentContent from "../../content/ContinueDocumentContent.json";
 import ArxmlPreviewerDocumentContent from "../../content/ArxmlPreviewerDocumentContent.json"; 
+import AutosarCodeGenDocumentContent from "../../content/AutosarCodeGenDocumentContent.json";
 import * as styles from "./styles";
 
 
@@ -91,6 +92,7 @@ const documentMap: Record<string, any> = {
   arxmleditor: ArxmlEditorDocumentContent,
   continue: ContinueDocumentContent,
   arxmlpreviewer: ArxmlPreviewerDocumentContent,
+  autosarcodegen: AutosarCodeGenDocumentContent,
 };
 
 const DocumentPage = () => {

@@ -4,6 +4,7 @@
     { "key": "autosarllm", "label": "AutosarLLM" },
     { "key": "arxmleditor", "label": "Arxml tool" },
     { "key": "continue", "label": "Continue" },
-    { "key": "arxmlpreviewer", "label": "ARXML Previewer" }
+    { "key": "arxmlpreviewer", "label": "ARXML Previewer" },
+    { "key": "autosarcodegen", "label": "Autosar Code Generator" }
   ]
 }

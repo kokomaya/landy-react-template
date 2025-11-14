@@ -2,7 +2,8 @@
   "options": [
     { "key": "arviewer", "label": "ARViewer" },
     { "key": "autosarllm", "label": "AutosarLLM" },
-    { "key": "arxmleditor", "label": "Arxml Editor" },
-    { "key": "continue", "label": "Continue" }
+    { "key": "arxmleditor", "label": "Arxml tool" },
+    { "key": "continue", "label": "Continue" },
+    { "key": "arxmlpreviewer", "label": "ARXML Previewer" }
   ]
 }

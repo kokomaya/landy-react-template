@@ -1,7 +1,7 @@
 {
-  "产品简介": {
-    "title": "ArxmlEditor 产品介绍",
-    "description": "ArxmlEditor 是专为 AUTOSAR ARXML 文件设计的可视化编辑工具，支持属性增删改查、复制等操作，并集成 MCP 封装，方便项目集成与扩展。"
+  "简介": {
+    "title": "Arxml 编辑实现",
+    "description": "ArxmlEditor 是专为 AUTOSAR ARXML 文件设计的可视化编辑工具，支持属性增删改查、复制等操作，并集成 MCP 封装，方便项目集成与扩展。用于 arxml编辑 的工具，旨在 arxml在AI agent模式下提供arxml工具调用。它可以帮助开发者更高效地 编辑arxml。"
   },
   "环境准备与安装": {
     "Node.js": "推荐 18.x 及以上，安装 https://nodejs.org/",
@@ -12,32 +12,30 @@
       "pip install -r requirements.txt （autosar_parser 目录）"
     ]
   },
-  "构建与启动": {
-    "前端构建": [
-      "npm run build （一次性构建）",
-      "npm run watch （开发模式自动编译）"
-    ],
-    "扩展调试": [
-      "VS Code F5 启动扩展主机，调试 extension.ts"],
-    "Web服务启动": [
-      "cd docs; python -m http.server 8080 （浏览器访问 http://localhost:8080）"
-    ],
-    "Python脚本": [
-      "cd autosar_parser; python arxml_parser_test.py （运行解析脚本）"
-    ]
-  },
-  "页面与功能": {
-    "属性编辑": [
-      { "title": "增删改查", "description": "支持属性的添加、删除、修改、查询与复制。" },
-      { "title": "MCP集成", "description": "可与 MCP 进行无缝集成，扩展编辑能力。" }
-    ],
-    "可视化操作": [
-      { "title": "界面友好", "description": "现代化布局，提升编辑体验。" },
-      { "title": "项目集成", "description": "可嵌入到各类 AUTOSAR 项目中。" }
-    ]
-  },
+  "Features": [
+    "🚀 特性一：支持增删改查复制",
+    "🛠️ 特性二：目前提供DEM模块部分配置功能的编辑",
+    "📊 特性三：以服务的方式提供"
+  ],
+  "Contribution": [
+
+"- 以下所有命令都是基于windows操作系统",
+
+"- 克隆仓库",
+"`git clone https://github-am.int.automotive-wan.com/uie63794/arxml_mcp.git`",
+"- 切换到root目录",
+"`cd arxml_mcp`",
+"- 创建名为虚拟环境",
+"`python -m venv .venv`",
+"- 在命令行激活虚拟环境",
+"`venv\\Scripts\\Activate.ps1`",
+"- 在vscode工作空间选择虚拟环境:Ctrl+Shift+P -> Python:Select Interpreter -> 选择创建的虚拟环境",
+
+"- 本仓库完全依赖autosar_parser实现，开发之前需要安装autosar_parser，请参考Installation安装依赖",
+"- 其他依赖，如Flask可以使用标准方式从官方镜像源进行安装"
+  ],
   "常见问题与支持": {
-    "Node.js依赖": "如扩展无法激活，请确认 Node.js 依赖已安装，VS Code 版本符合要求。",
+    "Node.js依赖": "如扩展无法激活，请确认 Node.js 依赖已安装，VS Code 版本符合要求.",
     "Python依赖": "如脚本报错，请确认 Python 依赖已正确安装。",
     "端口占用": "如 Web 服务无法启动，请检查端口是否被占用或权限问题。",
     "更多帮助": "如遇其他问题，请通过 Issue 或产品支持团队反馈。"

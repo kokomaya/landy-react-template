@@ -35,54 +35,114 @@ const markdownComponents = {
 };
 
 const renderContent = (content: any): React.ReactNode => {
-  // 字符串直接渲染为 Markdown
+  // ====== 1. 字符串处理：新增图片/视频解析 ======
   if (typeof content === "string") {
-    return <ReactMarkdown components={markdownComponents}>{content}</ReactMarkdown>;
-  }
-  // 数组：递归渲染每个元素（支持字符串、对象、数组）
-  if (Array.isArray(content)) {
-    // 如果数组全是字符串，则合并为一个 markdown 块
-    if (content.every((item) => typeof item === "string")) {
-      return <ReactMarkdown components={markdownComponents}>{content.join("\n\n")}</ReactMarkdown>;
+    const raw = content.trim();
+    // image//: 开头 → 图片
+    if (raw.startsWith("image//:")) {
+      const realPath = raw.replace("image//:", "").trim();
+      return (
+        <img
+          src={realPath}
+          alt=""
+          style={{ maxWidth: "100%", borderRadius: 8, margin: "12px 0" }}
+        />
+      );
     }
-    // 否则递归渲染每个元素
+
+    // video//: 开头 → 视频
+    if (raw.startsWith("video//:")) {
+      const realPath = raw.replace("video//:", "").trim();
+      return (
+        <video
+          src={realPath}
+          controls
+          style={{ width: "100%", borderRadius: 8, margin: "12px 0" }}
+        />
+      );
+    }
+
+    // 默认渲染 Markdown
+    return <ReactMarkdown components={markdownComponents}>{raw}</ReactMarkdown>;
+  }
+
+  // ====== 2. 数组处理 ======
+  if (Array.isArray(content)) {
     return (
       <>
-        {content.map((item: any, idx: number) => (
-          <div key={idx}>{renderContent(item)}</div>
-        ))}
+        {content.map((item: any, idx: number) => {
+
+          // 如果 item 是 ReactElement（如 <p>image//:xxx</p>）
+          if (React.isValidElement(item)) {
+
+            const element = item as React.ReactElement<any>;
+            let texts: string[] = [];
+
+            const extractText = (node: any) => {
+              if (typeof node === "string") {
+                texts.push(node);
+              } else if (Array.isArray(node)) {
+                node.forEach(extractText);
+              } else if (node && node.props && node.props.children) {
+                extractText(node.props.children);
+              }
+            };
+
+            extractText(element.props.children);
+
+            if (texts.length > 0) {
+              return (
+                <div key={idx}>
+                  {texts.map((t, i) => (
+                    <div key={i}>{renderContent(t)}</div>
+                  ))}
+                </div>
+              );
+            }
+          }
+
+          return <div key={idx}>{renderContent(item)}</div>;
+        })}
       </>
     );
   }
-  // 对象：分组或键值对
+
+  // ====== 3. 对象（分组/键值） ======
   if (typeof content === "object" && content !== null) {
-    // 特殊处理页面与功能分组
-    if (Object.values(content).length > 0 && typeof Object.values(content)[0] === "object" && !content.title && !content.description) {
+    if (
+      Object.values(content).length > 0 &&
+      typeof Object.values(content)[0] === "object" &&
+      !content.title &&
+      !content.description
+    ) {
       return Object.entries(content).map(([group, value]) => (
-        <div key={group} style={{marginBottom: 32}}>
+        <div key={group} style={{ marginBottom: 32 }}>
           <styles.DocMainTitle>{group}</styles.DocMainTitle>
           {renderContent(value)}
         </div>
       ));
     }
-    // 普通对象（如 title/description）
+
     return (
       <>
         {content.title && <styles.CardTitle>{content.title}</styles.CardTitle>}
-        {content.description && (Array.isArray(content.description)
-          ? renderContent(content.description)
-          : <ReactMarkdown components={markdownComponents}>{content.description}</ReactMarkdown>)}
-        {Object.entries(content).map(([key, value]) => (
+        {content.description &&
+          (Array.isArray(content.description)
+            ? renderContent(content.description)
+            : <ReactMarkdown components={markdownComponents}>{content.description}</ReactMarkdown>)}
+
+        {Object.entries(content).map(([key, value]) =>
           key !== "title" && key !== "description" ? (
-            <div key={key} style={{marginBottom: 16}}>
+            <div key={key} style={{ marginBottom: 16 }}>
               <strong>{key}：</strong>
               {renderContent(value)}
             </div>
           ) : null
-        ))}
+        )}
       </>
     );
   }
+
   return null;
 };
 

@@ -57,12 +57,18 @@ const Header = ({ t }: { t: TFunction }) => {
     // 跳转到对应产品文档页面
     window.location.href = `/document/${key.toLowerCase()}`;
   };
+
+
   const MenuItem = () => (
     <>
-      <CustomNavLinkSmall onClick={() => scrollTo("about")}> 
+      <CustomNavLinkSmall onClick={() => {
+        window.location.href = `/home#about`;
+      }}> 
         <Span>{t("About")}</Span>
       </CustomNavLinkSmall>
-      <CustomNavLinkSmall onClick={() => scrollTo("motivations")}> 
+      <CustomNavLinkSmall onClick={() => {
+        window.location.href = `/home#motivations`;
+      }}> 
         <Span>{t("Motivations")}</Span>
       </CustomNavLinkSmall>
       <div style={{ position: "relative", display: "inline-block" }} ref={productMenuRef}>
@@ -87,7 +93,9 @@ const Header = ({ t }: { t: TFunction }) => {
       </div>
       <CustomNavLinkSmall
         style={{ width: "180px" }}
-        onClick={() => scrollTo("contact")}
+        onClick={() => {
+          window.location.href = `/home#contact`;
+        }}
       >
         <Span>
           <Button>{t("Contact")}</Button>

@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, useEffect } from "react";
 import AutosarLLM from "../../content/AutosarLLM.json";
 import MiddleBlockContent from "../../content/MiddleBlockContent.json";
 import AboutContent from "../../content/AboutContent.json";
@@ -7,7 +7,6 @@ import Motivations from "../../content/Motivations.json";
 import ContactContent from "../../content/ContactContent.json";
 import ArxmlEditorContent from "../../content/ArxmlEditorContent.json";
 import ContinueContent from "../../content/ContinueContent.json";
-
 const Contact = lazy(() => import("../../components/ContactForm"));
 const MiddleBlock = lazy(() => import("../../components/MiddleBlock"));
 const Container = lazy(() => import("../../common/Container"));
@@ -18,6 +17,16 @@ const Home = () => {
   const handleMiddleBlockClick = () => {
     window.location.href = "/document";
   };
+
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      const el = document.getElementById(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, []);
   return (
     <Container>
       <ScrollToTop />

@@ -44,10 +44,14 @@ const Header = ({ t }: { t: TFunction }) => {
     };
   }, [productMenuOpen]);
   const scrollTo = (id: string) => {
-    const element = document.getElementById(id) as HTMLDivElement;
-    element.scrollIntoView({ behavior: "smooth" });
-    setVisibility(false);
-    setProductMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      const headerHeight = 100; // HeaderSection 高度
+      const y = element.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+      window.scrollTo({ top: y, behavior: "smooth" });
+      setVisibility(false);
+      setProductMenuOpen(false);
+    }
   };
   const handleProductClick = () => {
     setProductMenuOpen((open) => !open);

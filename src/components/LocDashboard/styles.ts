@@ -45,7 +45,7 @@ export const ChartRow = styled.div`
   gap: 16px;
   margin-bottom: 16px;
   align-items: start;
-  grid-column: 1 / -1; /* span both columns */
+  grid-column: 2 / 3; /* place ChartRow in main (second) grid column */
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
@@ -53,13 +53,18 @@ export const ChartRow = styled.div`
 
 export const ChartArea = styled.div`
   display: grid;
-  grid-template-columns: 1fr 360px;
+  /* Two-column layout: left column stacks Top Modules and Table; right column holds Language Distribution. */
+  grid-template-columns: 1fr 1fr;
+  /* let rows size to their content so cards fit naturally */
   grid-template-rows: auto auto;
-  gap: 16px;
-  width: 100%;
-  align-items: start;
   grid-auto-rows: auto;
-  /* Layout: TopModules at (1,1), LanguageDistribution at (1-2,2), LanguageTable at (2,1) */
+  gap: 28px;
+  grid-template-columns: 1.25fr 0.75fr; /* left area wider, right area for pie */
+  width: 100%;
+  align-items: stretch;
+  justify-items: stretch;
+  min-height: 320px; /* minimal room; rows will expand with content */
+  /* Layout: left column stacks two cards; right column spans both rows for the pie */
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
@@ -67,8 +72,13 @@ export const ChartArea = styled.div`
 `;
 
 export const ChartCard = styled.div`
-  background:#fff;padding:12px;border-radius:8px;box-shadow:0 6px 18px rgba(24,33,109,0.04);min-height:220px;display:flex;flex-direction:column;
-  .title{font-weight:700;color:#18216d;margin-bottom:8px}
+  background:#fff;padding:18px;border-radius:12px;box-shadow:0 8px 28px rgba(24,33,109,0.06);min-height:220px;display:flex;flex-direction:column;overflow:visible;
+  .title{font-weight:700;color:#18216d;margin-bottom:10px}
+  .chartInner{flex:1;display:flex;align-items:center;justify-content:center}
+  .cardBody{flex:1;overflow:auto;padding-right:6px}
+  /* allow card height to grow with content instead of forcing full cell height */
+  /* ensure the card fills its grid cell */
+  &.spanRow { grid-row: 1 / 3; }
   @media (max-width: 900px) {
     min-height: 180px;
   }
@@ -77,6 +87,7 @@ export const ChartCard = styled.div`
 export const Side = styled.aside`
   background:#fff;padding:16px;border-radius:8px;box-shadow:0 6px 18px rgba(24,33,109,0.04);
   h3{margin-top:0}
+  grid-column: 1 / 2;
 `;
 
 export const ModuleItem = styled.div`
@@ -90,6 +101,7 @@ export const ModuleItem = styled.div`
 export const Main = styled.main`
   background:#fff;padding:16px;border-radius:8px;box-shadow:0 6px 18px rgba(24,33,109,0.04);
   h3{margin-top:0}
+  grid-column: 2 / 3;
 `;
 
 export const ModuleList = styled.div`

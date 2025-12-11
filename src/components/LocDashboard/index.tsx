@@ -89,30 +89,35 @@ const LocDashboard: React.FC = () => {
   };
 
   const renderLanguagePie = () => {
+    // legacy: we now render pie and legend separately where needed
+    return renderLanguagePieOnly();
+  };
+
+  const renderLanguagePieOnly = () => {
     const total = languageTotals.reduce((s: number, x: any) => s + x.value, 0) || 1;
     let offset = 0;
     const parts = languageTotals.map((p: any, i: number) => {
-      const perc = Math.round((p.value / total) * 1000) / 10; // one decimal
-      const start = offset;
       const angle = (p.value / total) * 360;
+      const start = offset;
       offset += angle;
-      return { ...p, perc, angle, start, color: COLORS[i % COLORS.length] };
+      return { ...p, angle, start, color: COLORS[i % COLORS.length] };
     });
+    const gradient = parts.map((p: any) => `${p.color} ${p.start}deg ${p.start + p.angle}deg`).join(',');
+    return <div style={{width: '100%', height: '100%', borderRadius: 9999, background: `conic-gradient(${gradient})`}} />;
+  };
 
-    const gradient = parts.map((p: any, i:number) => `${p.color} ${p.start}deg ${p.start + p.angle}deg`).join(',');
-
+  const renderLanguageLegend = () => {
+    const total = languageTotals.reduce((s: number, x: any) => s + x.value, 0) || 1;
+    const rows = [...languageTotals].map((p: any, i: number) => ({...p, color: COLORS[i % COLORS.length], perc: Math.round((p.value/total)*1000)/10}));
     return (
-      <div style={{display:'flex', gap:12, alignItems:'center'}}>
-        <div style={{width:140,height:140,borderRadius:9999,background:`conic-gradient(${gradient})`}} />
-        <div style={{display:'flex',flexDirection:'column',gap:6}}>
-          {parts.map((p: any) => (
-            <div key={p.name} style={{display:'flex',alignItems:'center',gap:8}}>
-              <div style={{width:12,height:12,background:p.color,borderRadius:3}} />
-              <div style={{minWidth:120}}>{p.name}</div>
-              <div style={{marginLeft:'auto',fontWeight:700}}>{p.perc}%</div>
-            </div>
-          ))}
-        </div>
+      <div style={{display:'flex',flexDirection:'column',gap:10}}>
+        {rows.map((r: any) => (
+          <div key={r.name} style={{display:'flex',alignItems:'center',gap:8}}>
+            <div style={{width:12,height:12,background:r.color,borderRadius:3}} />
+            <div style={{flex:'0 0 auto',minWidth:120,color:'#18216d'}}>{r.name}</div>
+            <div style={{marginLeft:'auto',fontWeight:700}}>{r.perc}%</div>
+          </div>
+        ))}
       </div>
     );
   };
@@ -183,17 +188,30 @@ const LocDashboard: React.FC = () => {
           <S.ChartArea>
             <S.ChartCard style={{gridColumn: '1 / 2', gridRow: '1 / 2'}}>
               <div className="title">Top Modules (LOC)</div>
-              {renderTopModulesChart()}
+              <div className="cardBody">{renderTopModulesChart()}</div>
             </S.ChartCard>
 
             <S.ChartCard style={{gridColumn: '1 / 2', gridRow: '2 / 3'}}>
               <div className="title">Language Table</div>
-              <div style={{maxHeight: 220, overflow: 'auto'}}>{renderLanguageTable()}</div>
+              <div className="cardBody">{renderLanguageTable()}</div>
             </S.ChartCard>
 
-            <S.ChartCard style={{gridColumn: '2 / 3', gridRow: '1 / 3'}}>
+            <S.ChartCard className="spanRow" style={{gridColumn: '2 / 3', gridRow: '1 / 3'}}>
               <div className="title">Language Distribution</div>
-              <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>{renderLanguagePie()}</div>
+              <div className="chartInner" style={{width: '100%', padding: 8, alignItems: 'flex-start'}}>
+                <div style={{display:'flex',alignItems:'center',gap:18,width:'100%'}}>
+                  <div style={{flex:'0 0 auto',width:'min(300px, 40%)',maxWidth:300, display:'flex', alignItems:'center'}}>
+                    <div style={{width:'100%',paddingTop:'100%',position:'relative'}}>
+                      <div style={{position:'absolute',inset:0,borderRadius:9999,overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',padding:8}}>
+                        {renderLanguagePieOnly()}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{flex:1, display:'flex', alignItems:'flex-start', paddingTop:8}}>
+                    {renderLanguageLegend()}
+                  </div>
+                </div>
+              </div>
             </S.ChartCard>
           </S.ChartArea>
         </S.ChartRow>

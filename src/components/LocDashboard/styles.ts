@@ -29,16 +29,49 @@ export const Card = styled.div`
 `;
 
 export const Grid = styled.div`
-  display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  align-items: start;
+  grid-auto-rows: auto;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const ChartRow = styled.div`
-  display:grid;grid-template-columns:1fr 360px;gap:16px;margin-bottom:16px;align-items:start;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: start;
+  grid-column: 1 / -1; /* span both columns */
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const ChartArea = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  grid-template-rows: auto auto;
+  gap: 16px;
+  width: 100%;
+  align-items: start;
+  grid-auto-rows: auto;
+  /* Layout: TopModules at (1,1), LanguageDistribution at (1-2,2), LanguageTable at (2,1) */
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
 `;
 
 export const ChartCard = styled.div`
   background:#fff;padding:12px;border-radius:8px;box-shadow:0 6px 18px rgba(24,33,109,0.04);min-height:220px;display:flex;flex-direction:column;
   .title{font-weight:700;color:#18216d;margin-bottom:8px}
+  @media (max-width: 900px) {
+    min-height: 180px;
+  }
 `;
 
 export const Side = styled.aside`
@@ -62,6 +95,7 @@ export const Main = styled.main`
 export const ModuleList = styled.div`
   display:flex;flex-direction:column;gap:12px;max-height:70vh;overflow:auto;padding-right:8px;
 `;
+
 
 export const ModuleCard = styled.div`
   border-radius:8px;padding:12px;border:1px solid #f0f2f8;background:#fbfdff;

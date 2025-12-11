@@ -1,18 +1,6 @@
 import React, { useMemo, useState } from "react";
 import locData from "../../content/loc_details.json";
 import * as S from "./styles";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
-} from "recharts";
 
 const getValue = (d: any) => {
   if (typeof d.Code === "number" && d.Code > 0) return d.Code;
@@ -61,23 +49,102 @@ const LocDashboard: React.FC = () => {
 
   const topModules = useMemo(() => [...modules].sort((a: any, b: any) => (b.loc || 0) - (a.loc || 0)).slice(0, 12), [modules]);
 
-  const barData = useMemo(() => topModules.map((m: any) => ({ name: m.key, loc: m.loc || 0 })), [topModules]);
-
   const languageTotals = useMemo(() => {
-    const map: Record<string, number> = {};
+    const map: Record<string, { value: number; files: number }> = {};
     modules.forEach((m: any) => {
       if (Array.isArray(m.details)) {
         m.details.forEach((d: any) => {
           const name = d.Name || "Unknown";
           const v = getValue(d);
-          map[name] = (map[name] || 0) + v;
+          const files = Array.isArray(d.Files) ? d.Files.length : (d.Count || 0);
+          if (!map[name]) map[name] = { value: 0, files: 0 };
+          map[name].value += v;
+          map[name].files += files;
         });
       }
     });
-    return Object.entries(map).map(([name, value]) => ({ name, value }));
+    return Object.entries(map).map(([name, { value, files }]) => ({ name, value, files }));
   }, [modules]);
 
   const COLORS = ["#5662f6", "#3ad29f", "#ffb86b", "#ff6b6b", "#9f7aea", "#60a5fa", "#f472b6"];
+
+  const renderTopModulesChart = () => {
+    const max = Math.max(...topModules.map((m: any) => m.loc || 0), 1);
+    return (
+      <div style={{display: 'flex', flexDirection: 'column', gap: 8}}>
+        {topModules.map((m: any) => {
+          const w = Math.round(((m.loc || 0) / max) * 100);
+          return (
+            <div key={m.key} style={{display: 'flex', alignItems: 'center', gap: 12}}>
+              <div style={{width: 140, fontSize: 12, color: '#334'}}>{m.key}</div>
+              <div style={{flex:1, background: '#eef6ff', height: 12, borderRadius: 6, overflow: 'hidden'}}>
+                <div style={{width: `${w}%`, height: '100%', background: 'linear-gradient(90deg,#5662f6,#3ad29f)'}} />
+              </div>
+              <div style={{width: 80, textAlign: 'right', fontWeight:700, color:'#18216d'}}>{(m.loc||0).toLocaleString()}</div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const renderLanguagePie = () => {
+    const total = languageTotals.reduce((s: number, x: any) => s + x.value, 0) || 1;
+    let offset = 0;
+    const parts = languageTotals.map((p: any, i: number) => {
+      const perc = Math.round((p.value / total) * 1000) / 10; // one decimal
+      const start = offset;
+      const angle = (p.value / total) * 360;
+      offset += angle;
+      return { ...p, perc, angle, start, color: COLORS[i % COLORS.length] };
+    });
+
+    const gradient = parts.map((p: any, i:number) => `${p.color} ${p.start}deg ${p.start + p.angle}deg`).join(',');
+
+    return (
+      <div style={{display:'flex', gap:12, alignItems:'center'}}>
+        <div style={{width:140,height:140,borderRadius:9999,background:`conic-gradient(${gradient})`}} />
+        <div style={{display:'flex',flexDirection:'column',gap:6}}>
+          {parts.map((p: any) => (
+            <div key={p.name} style={{display:'flex',alignItems:'center',gap:8}}>
+              <div style={{width:12,height:12,background:p.color,borderRadius:3}} />
+              <div style={{minWidth:120}}>{p.name}</div>
+              <div style={{marginLeft:'auto',fontWeight:700}}>{p.perc}%</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderLanguageTable = () => {
+    const total = languageTotals.reduce((s: number, x: any) => s + x.value, 0) || 1;
+    const rows = [...languageTotals].sort((a: any, b: any) => b.value - a.value);
+    return (
+      <div style={{overflowX: 'auto'}}>
+        <table style={{width: '100%', borderCollapse: 'collapse'}}>
+          <thead>
+            <tr style={{textAlign:'left'}}>
+              <th style={{padding:8,color:'#556',fontWeight:700}}>Language</th>
+              <th style={{padding:8,color:'#556',fontWeight:700}}>Lines</th>
+              <th style={{padding:8,color:'#556',fontWeight:700}}>Files</th>
+              <th style={{padding:8,color:'#556',fontWeight:700}}>Percent</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r: any) => (
+              <tr key={r.name} style={{borderBottom: '1px solid #f3f6ff'}}>
+                <td style={{padding:8}}>{r.name}</td>
+                <td style={{padding:8}}>{r.value.toLocaleString()}</td>
+                <td style={{padding:8}}>{(r.files || 0).toLocaleString()}</td>
+                <td style={{padding:8}}>{Math.round((r.value/total)*1000)/10}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
 
   return (
     <S.Wrapper>
@@ -113,32 +180,24 @@ const LocDashboard: React.FC = () => {
 
       <S.Grid>
         <S.ChartRow>
-          <S.ChartCard>
-            <div className="title">Top Modules (LOC)</div>
-            <ResponsiveContainer width="100%" height={220}>
-              <BarChart data={barData} layout="vertical" margin={{ top: 8, right: 8, left: 8, bottom: 8 }}>
-                <XAxis type="number" hide />
-                <YAxis dataKey="name" type="category" width={180} tick={{ fontSize: 12 }} />
-                <Tooltip formatter={(v: any) => v.toLocaleString()} />
-                <Bar dataKey="loc" fill="#5662f6" />
-              </BarChart>
-            </ResponsiveContainer>
-          </S.ChartCard>
+          <S.ChartArea>
+            <S.ChartCard style={{gridColumn: '1 / 2', gridRow: '1 / 2'}}>
+              <div className="title">Top Modules (LOC)</div>
+              {renderTopModulesChart()}
+            </S.ChartCard>
 
-          <S.ChartCard>
-            <div className="title">Language Distribution</div>
-            <ResponsiveContainer width="100%" height={220}>
-              <PieChart>
-                <Pie data={languageTotals} dataKey="value" nameKey="name" outerRadius={80} label>
-                  {languageTotals.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Legend verticalAlign="bottom" height={36} />
-              </PieChart>
-            </ResponsiveContainer>
-          </S.ChartCard>
+            <S.ChartCard style={{gridColumn: '1 / 2', gridRow: '2 / 3'}}>
+              <div className="title">Language Table</div>
+              <div style={{maxHeight: 220, overflow: 'auto'}}>{renderLanguageTable()}</div>
+            </S.ChartCard>
+
+            <S.ChartCard style={{gridColumn: '2 / 3', gridRow: '1 / 3'}}>
+              <div className="title">Language Distribution</div>
+              <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>{renderLanguagePie()}</div>
+            </S.ChartCard>
+          </S.ChartArea>
         </S.ChartRow>
+
         <S.Side>
           <h3>Top Modules</h3>
           {topModules.map((m: any) => (

@@ -23,7 +23,35 @@ const LocDashboard: React.FC = () => {
 
   const modules = useMemo(() => {
     if (!build) return [];
-    return Object.entries(build).filter(([k]) => k !== "_meta").map(([k, v]: any) => ({ key: k, ...(v as any) }));
+    // Modules组件需要main和submodules分别展示
+    let result: any[] = [];
+    Object.entries(build)
+      .filter(([k]) => k !== "_meta")
+      .forEach(([k, v]: any) => {
+        let details = v.details;
+        const { details: _d, ...summary } = v;
+        if (details && !Array.isArray(details) && typeof details === 'object') {
+          // main部分
+          if (Array.isArray(details.main)) {
+            // 只统计main自己的loc（如果有 summary.loc 但 submodules 存在，则需要重新计算 main 的 loc）
+            let mainLoc = 0;
+            if (details.main.length > 0) {
+              mainLoc = details.main.reduce((sum: number, item: any) => sum + (item.Lines || item.loc || 0), 0);
+            }
+            result.push({ key: k + `_main`, ...summary, details: details.main, isSub: false, loc: mainLoc });
+          }
+          // submodules部分，每个子仓库单独展示自己的loc
+          if (details.submodules && typeof details.submodules === 'object') {
+            Object.entries(details.submodules).forEach(([subKey, subVal]: any) => {
+              result.push({ key: k + `_${subKey}`, ...summary, details: subVal.details, isSub: true, subName: subKey, loc: subVal.loc });
+            });
+          }
+        } else {
+          // 普通数组，直接作为一个模块
+          result.push({ key: k, ...summary, details });
+        }
+      });
+    return result;
   }, [build]);
 
   const filtered = useMemo(() => {
@@ -52,6 +80,7 @@ const LocDashboard: React.FC = () => {
 
   const languageTotals = useMemo(() => {
     const map: Record<string, { value: number; files: number }> = {};
+    // 其他组件合并main和submodules一起统计
     modules.forEach((m: any) => {
       if (Array.isArray(m.details)) {
         m.details.forEach((d: any) => {

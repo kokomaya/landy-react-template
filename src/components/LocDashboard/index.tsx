@@ -204,15 +204,15 @@ const LocDashboard: React.FC = () => {
             <S.ChartCard className="spanRow" style={{gridColumn: '2 / 3', gridRow: '1 / 3'}}>
               <div className="title">Language Distribution</div>
               <div className="chartInner" style={{width: '100%', padding: 8, alignItems: 'flex-start'}}>
-                <div style={{display:'flex',alignItems:'center',gap:18,width:'100%'}}>
-                  <div style={{flex:'0 0 auto',width:'min(300px, 40%)',maxWidth:300, display:'flex', alignItems:'center'}}>
-                    <div style={{width:'100%',paddingTop:'100%',position:'relative'}}>
-                      <div style={{position:'absolute',inset:0,borderRadius:9999,overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',padding:8}}>
+                <div style={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%',gap:18}}>
+                  <div style={{width:'100%',aspectRatio:'1',maxWidth:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                    <div style={{width:'100%',height:'100%',position:'relative'}}>
+                      <div style={{position:'absolute',inset:0,borderRadius:9999,overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',padding:8,width:'100%',height:'100%'}}>
                         {renderLanguagePieOnly()}
                       </div>
                     </div>
                   </div>
-                  <div style={{flex:1, display:'flex', alignItems:'flex-start', paddingTop:8}}>
+                  <div style={{width:'100%',marginTop:18}}>
                     {renderLanguageLegend()}
                   </div>
                 </div>

@@ -4,8 +4,9 @@
   "section": [
   {
     "title": "网络问题",
-    "content": "适用DOORS或DNG等需求管理工具的项目，通常面临网络不稳定、访问缓慢。",
-    "icon": "notes.svg"
+    "content": "适用DOORS或DNG等需求管理工具的项目，时常面临网络不稳定、访问缓慢。",
+    "icon": "notes.svg",
+    "video": "/video/dng_opening.mp4"
   },
   {
     "title": "数据量与时间成本",
@@ -28,10 +29,16 @@
     "icon": "notes.svg"
   },
   {
+    "title": "工具初始化",
+    "content": "部分配置工具初始化时间过长。操作繁琐。",
+    "icon": "notes.svg",
+    "video": "/video/dacinci-opening.mp4"
+  },
+  {
     "title": "More...",
     "content": "",
     "icon": "notes.svg"
   }
-  
 ]
+
 }

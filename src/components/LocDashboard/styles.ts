@@ -58,7 +58,7 @@ export const ChartRow = styled.div`
 
 export const ChartArea = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr;   /* 左右比例更均匀 */
+    grid-template-columns: 2.2fr 0.8fr;   /* left area wider, right area for pie */
   grid-template-rows: auto auto;
   gap: 28px;
   width: 100%;

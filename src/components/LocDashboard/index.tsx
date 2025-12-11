@@ -72,16 +72,16 @@ const LocDashboard: React.FC = () => {
   const renderTopModulesChart = () => {
     const max = Math.max(...topModules.map((m: any) => m.loc || 0), 1);
     return (
-      <div style={{display: 'flex', flexDirection: 'column', gap: 8}}>
+      <div style={{display: 'flex', flexDirection: 'column', gap: 10}}>
         {topModules.map((m: any) => {
           const w = Math.round(((m.loc || 0) / max) * 100);
           return (
             <div key={m.key} style={{display: 'flex', alignItems: 'center', gap: 12}}>
-              <div style={{width: 140, fontSize: 12, color: '#334'}}>{m.key}</div>
-              <div style={{flex:1, background: '#eef6ff', height: 12, borderRadius: 6, overflow: 'hidden'}}>
-                <div style={{width: `${w}%`, height: '100%', background: 'linear-gradient(90deg,#5662f6,#3ad29f)'}} />
+              <div style={{width: 120, fontSize: 12, color: '#334', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}} title={m.key}>{m.key}</div>
+              <div style={{flex:1, background: '#eef6ff', height: 14, borderRadius: 8, overflow: 'hidden'}}>
+                <div style={{width: `${w}%`, height: '100%', background: 'linear-gradient(90deg,#5662f6,#3ad29f)', borderRadius: 8}} />
               </div>
-              <div style={{width: 80, textAlign: 'right', fontWeight:700, color:'#18216d'}}>{(m.loc||0).toLocaleString()}</div>
+              <div style={{width: 96, textAlign: 'right', fontWeight:700, color:'#18216d'}}>{(m.loc||0).toLocaleString()}</div>
             </div>
           );
         })}

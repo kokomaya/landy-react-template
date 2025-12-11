@@ -1,3 +1,4 @@
+// src/router/index.tsx
 import { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import Footer from "../components/Footer";
@@ -10,6 +11,7 @@ const Router = () => {
     <Suspense fallback={null}>
       <Styles />
       <Header />
+       <div style={{ paddingTop: 80 }}>
       <Switch>
         {routes.map((routeItem) => {
           return (
@@ -22,6 +24,7 @@ const Router = () => {
           );
         })}
       </Switch>
+      </div>
       <Footer />
     </Suspense>
   );

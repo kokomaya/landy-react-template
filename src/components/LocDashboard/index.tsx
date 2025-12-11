@@ -109,14 +109,18 @@ const LocDashboard: React.FC = () => {
 
   const renderLanguageLegend = () => {
     const total = languageTotals.reduce((s: number, x: any) => s + x.value, 0) || 1;
-    const rows = [...languageTotals].map((p: any, i: number) => ({...p, color: COLORS[i % COLORS.length], perc: Math.round((p.value/total)*1000)/10}));
+        const rows = [...languageTotals].map((p: any, i: number) => ({
+          ...p,
+          color: COLORS[i % COLORS.length],
+          perc: ((p.value / total) * 100).toFixed(5)
+        }));
     return (
       <div style={{display:'flex',flexDirection:'column',gap:10}}>
         {rows.map((r: any) => (
           <div key={r.name} style={{display:'flex',alignItems:'center',gap:8}}>
             <div style={{width:12,height:12,background:r.color,borderRadius:3}} />
             <div style={{flex:'0 0 auto',minWidth:120,color:'#18216d'}}>{r.name}</div>
-            <div style={{marginLeft:'auto',fontWeight:700}}>{r.perc}%</div>
+                <div style={{marginLeft:'auto',fontWeight:700}}>{r.perc}%</div>
           </div>
         ))}
       </div>
@@ -143,7 +147,7 @@ const LocDashboard: React.FC = () => {
                 <td style={{padding:8}}>{r.name}</td>
                 <td style={{padding:8}}>{r.value.toLocaleString()}</td>
                 <td style={{padding:8}}>{(r.files || 0).toLocaleString()}</td>
-                <td style={{padding:8}}>{Math.round((r.value/total)*1000)/10}%</td>
+                    <td style={{padding:8}}>{((r.value/total)*100).toFixed(5)}%</td>
               </tr>
             ))}
           </tbody>

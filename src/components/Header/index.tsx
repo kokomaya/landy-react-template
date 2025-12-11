@@ -1,11 +1,8 @@
-import { useState, useRef, useEffect } from "react";
-import ProductMenu from "../../content/ProductMenu.json";
+import { useState } from "react";
 import { Row, Col, Drawer } from "antd";
 import { withTranslation, TFunction } from "react-i18next";
 import Container from "../../common/Container";
 import { SvgIcon } from "../../common/SvgIcon";
-import { DownOutlined } from "@ant-design/icons";
-import { Button } from "../../common/Button";
 import {
   HeaderSection,
   LogoContainer,
@@ -16,8 +13,6 @@ import {
   Label,
   Outline,
   Span,
-  DropdownMenu,
-  DropdownMenuItem,
 } from "./styles";
 
 const Header = ({ t }: { t: TFunction }) => {
@@ -27,83 +22,10 @@ const Header = ({ t }: { t: TFunction }) => {
     setVisibility(!visible);
   };
 
-  const [productMenuOpen, setProductMenuOpen] = useState(false);
-  const productMenuRef = useRef<HTMLDivElement>(null);
-
-  // 点击外部关闭下拉菜单
-  useEffect(() => {
-    if (!productMenuOpen) return;
-    const handleClickOutside = (event: MouseEvent) => {
-      if (productMenuRef.current && !productMenuRef.current.contains(event.target as Node)) {
-        setProductMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [productMenuOpen]);
-  const scrollTo = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const headerHeight = 100; // HeaderSection 高度
-      const y = element.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-      window.scrollTo({ top: y, behavior: "smooth" });
-      setVisibility(false);
-      setProductMenuOpen(false);
-    }
-  };
-  const handleProductClick = () => {
-    setProductMenuOpen((open) => !open);
-  };
-  const handleMenuOptionClick = (key: string) => {
-    setProductMenuOpen(false);
-    // 跳转到对应产品文档页面
-    window.location.href = `/document/${key.toLowerCase()}`;
-  };
-
-
   const MenuItem = () => (
     <>
-      <CustomNavLinkSmall onClick={() => {
-        window.location.href = `/home#about`;
-      }}> 
-        <Span>{t("About")}</Span>
-      </CustomNavLinkSmall>
-      <CustomNavLinkSmall onClick={() => {
-        window.location.href = `/home#motivations`;
-      }}> 
-        <Span>{t("Motivations")}</Span>
-      </CustomNavLinkSmall>
-      <div style={{ position: "relative", display: "inline-block" }} ref={productMenuRef}>
-        <CustomNavLinkSmall onClick={handleProductClick} style={{ userSelect: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <Span>
-            {t("Product")}
-            <DownOutlined style={{ fontSize: 12, marginLeft: 2, transition: "transform 0.2s", transform: productMenuOpen ? "rotate(180deg)" : "none" }} />
-          </Span>
-        </CustomNavLinkSmall>
-        {productMenuOpen && (
-          <DropdownMenu>
-            {ProductMenu.options.map((opt: { key: string; label: string }) => (
-              <DropdownMenuItem
-                key={opt.key}
-                onClick={() => handleMenuOptionClick(opt.key)}
-              >
-                {opt.label}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenu>
-        )}
-      </div>
-      <CustomNavLinkSmall
-        style={{ width: "180px" }}
-        onClick={() => {
-          window.location.href = `/home#contact`;
-        }}
-      >
-        <Span>
-          <Button>{t("Contact")}</Button>
-        </Span>
+      <CustomNavLinkSmall onClick={() => { window.location.href = `/home`; }}>
+        <Span>{t("Dashboard")}</Span>
       </CustomNavLinkSmall>
     </>
   );

@@ -1,0 +1,208 @@
+import React, { useMemo, useState } from "react";
+import locData from "../../content/loc_details.json";
+import * as S from "./styles";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+} from "recharts";
+
+const getValue = (d: any) => {
+  if (typeof d.Code === "number" && d.Code > 0) return d.Code;
+  if (typeof d.Lines === "number" && d.Lines > 0) return d.Lines;
+  if (typeof d.loc === "number") return d.loc;
+  return 0;
+};
+
+const LocDashboard: React.FC = () => {
+  const [buildKey, setBuildKey] = useState<string | null>(
+    Object.keys(locData)[0] || null
+  );
+  const [query, setQuery] = useState("");
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  const builds = useMemo(() => Object.keys(locData), []);
+
+  const build = useMemo(() => (buildKey ? (locData as any)[buildKey] : null), [buildKey]);
+
+  const modules = useMemo(() => {
+    if (!build) return [];
+    return Object.entries(build).filter(([k]) => k !== "_meta").map(([k, v]: any) => ({ key: k, ...(v as any) }));
+  }, [build]);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return modules;
+    return modules.filter((m: any) => m.key.toLowerCase().includes(q) || (m.release || "").toLowerCase().includes(q));
+  }, [modules, query]);
+
+  const totals = useMemo(() => {
+    let moduleCount = 0;
+    let totalLOC = 0;
+    const langSet = new Set<string>();
+    modules.forEach((m: any) => {
+      moduleCount += 1;
+      if (typeof m.loc === "number") totalLOC += m.loc;
+      if (Array.isArray(m.details)) {
+        m.details.forEach((d: any) => {
+          if (d && d.Name) langSet.add(d.Name);
+        });
+      }
+    });
+    return { moduleCount, totalLOC, languageCount: langSet.size };
+  }, [modules]);
+
+  const topModules = useMemo(() => [...modules].sort((a: any, b: any) => (b.loc || 0) - (a.loc || 0)).slice(0, 12), [modules]);
+
+  const barData = useMemo(() => topModules.map((m: any) => ({ name: m.key, loc: m.loc || 0 })), [topModules]);
+
+  const languageTotals = useMemo(() => {
+    const map: Record<string, number> = {};
+    modules.forEach((m: any) => {
+      if (Array.isArray(m.details)) {
+        m.details.forEach((d: any) => {
+          const name = d.Name || "Unknown";
+          const v = getValue(d);
+          map[name] = (map[name] || 0) + v;
+        });
+      }
+    });
+    return Object.entries(map).map(([name, value]) => ({ name, value }));
+  }, [modules]);
+
+  const COLORS = ["#5662f6", "#3ad29f", "#ffb86b", "#ff6b6b", "#9f7aea", "#60a5fa", "#f472b6"];
+
+  return (
+    <S.Wrapper>
+      <S.Topbar>
+        <div>
+          <h1>Repository LOC Dashboard</h1>
+          <div className="meta">Build: <strong>{buildKey}</strong></div>
+        </div>
+        <div className="controls">
+          <select value={buildKey || ""} onChange={(e) => setBuildKey(e.target.value)}>
+            {builds.map((b) => (
+              <option key={b} value={b}>{b}</option>
+            ))}
+          </select>
+          <input placeholder="Search modules..." value={query} onChange={(e) => setQuery(e.target.value)} />
+        </div>
+      </S.Topbar>
+
+      <S.Summary>
+        <S.Card>
+          <div className="label">Modules</div>
+          <div className="value">{totals.moduleCount}</div>
+        </S.Card>
+        <S.Card>
+          <div className="label">Total LOC</div>
+          <div className="value">{totals.totalLOC.toLocaleString()}</div>
+        </S.Card>
+        <S.Card>
+          <div className="label">Languages</div>
+          <div className="value">{totals.languageCount}</div>
+        </S.Card>
+      </S.Summary>
+
+      <S.Grid>
+        <S.ChartRow>
+          <S.ChartCard>
+            <div className="title">Top Modules (LOC)</div>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={barData} layout="vertical" margin={{ top: 8, right: 8, left: 8, bottom: 8 }}>
+                <XAxis type="number" hide />
+                <YAxis dataKey="name" type="category" width={180} tick={{ fontSize: 12 }} />
+                <Tooltip formatter={(v: any) => v.toLocaleString()} />
+                <Bar dataKey="loc" fill="#5662f6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </S.ChartCard>
+
+          <S.ChartCard>
+            <div className="title">Language Distribution</div>
+            <ResponsiveContainer width="100%" height={220}>
+              <PieChart>
+                <Pie data={languageTotals} dataKey="value" nameKey="name" outerRadius={80} label>
+                  {languageTotals.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Legend verticalAlign="bottom" height={36} />
+              </PieChart>
+            </ResponsiveContainer>
+          </S.ChartCard>
+        </S.ChartRow>
+        <S.Side>
+          <h3>Top Modules</h3>
+          {topModules.map((m: any) => (
+            <S.ModuleItem key={m.key} onClick={() => setExpanded(expanded === m.key ? null : m.key)}>
+              <div className="title">{m.key}</div>
+              <div className="small">release: {m.release || "-"}</div>
+              <div className="loc">{(m.loc || 0).toLocaleString()} LOC</div>
+            </S.ModuleItem>
+          ))}
+        </S.Side>
+
+        <S.Main>
+          <h3>Modules</h3>
+          <S.ModuleList>
+            {filtered.map((m: any) => (
+              <S.ModuleCard key={m.key}>
+                <div className="head">
+                  <div>
+                    <div className="name">{m.key}</div>
+                    <div className="meta">{m.release ? `release: ${m.release}` : ""}</div>
+                  </div>
+                  <div className="loc">{(m.loc || 0).toLocaleString()} LOC</div>
+                </div>
+                <div className="bars">
+                  {Array.isArray(m.details) && m.details.slice(0,6).map((d: any) => {
+                    const v = getValue(d);
+                    const max = Math.max(...(m.details || []).map((x: any)=>getValue(x)), 1);
+                    const w = Math.round((v / max) * 100);
+                    return (
+                      <div className="barRow" key={d.Name}>
+                        <div className="lang">{d.Name}</div>
+                        <div className="barOuter"><div className="barInner" style={{width: `${w}%`}}/></div>
+                        <div className="num">{v.toLocaleString()}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {expanded === m.key && (
+                  <S.Detail>
+                    <h4>Language breakdown</h4>
+                    <table>
+                      <thead>
+                        <tr><th>Language</th><th>Lines</th><th>Files</th></tr>
+                      </thead>
+                      <tbody>
+                        {Array.isArray(m.details) && m.details.map((d: any)=> (
+                          <tr key={d.Name}>
+                            <td>{d.Name}</td>
+                            <td>{getValue(d).toLocaleString()}</td>
+                            <td>{d.Count ?? "-"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </S.Detail>
+                )}
+              </S.ModuleCard>
+            ))}
+          </S.ModuleList>
+        </S.Main>
+      </S.Grid>
+    </S.Wrapper>
+  );
+};
+
+export default LocDashboard;

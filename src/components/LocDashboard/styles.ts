@@ -46,10 +46,11 @@ export const Grid = styled.div`
 
 export const ChartRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 460px;
+  grid-template-columns: 1fr;
   gap: 16px;
   margin-bottom: 16px;
   align-items: start;
+  grid-column: 1 / -1; /* make the chart row span the full grid width */
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -58,12 +59,12 @@ export const ChartRow = styled.div`
 
 export const ChartArea = styled.div`
   display: grid;
-    grid-template-columns: 2.2fr 0.8fr;   /* left area wider, right area for pie */
-  grid-template-rows: auto auto;
+    grid-template-columns: 2.2fr 0.8fr;   /* left wider for table/bars, right for pie/legend */
+    grid-template-rows: auto 1fr; /* first row sizes to content, second row fills remaining space */
   gap: 28px;
   width: 100%;
   align-items: stretch;
-  min-height: 420px;
+    min-height: 520px; /* give room so second row can stretch and cards share height */
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -78,7 +79,9 @@ export const ChartCard = styled.div`
   .cardBody{flex:1;overflow:auto;padding-right:6px}
   /* allow card height to grow with content instead of forcing full cell height */
   /* ensure the card fills its grid cell */
-  &.spanRow { grid-row: 1 / 3; }
+    /* modifier: make card fill its grid cell and hide overflow when used for equal-height rows */
+    &.fillRow { height: 100%; overflow: hidden; }
+    &.spanCol { grid-column: 1 / 3; }
   @media (max-width: 900px) {
     min-height: 180px;
   }

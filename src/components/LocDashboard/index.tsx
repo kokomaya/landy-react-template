@@ -1,3 +1,4 @@
+// src/components/LocDashboard/index.tsx
 import React, { useMemo, useState } from "react";
 import locData from "../../content/loc_details.json";
 import * as S from "./styles";

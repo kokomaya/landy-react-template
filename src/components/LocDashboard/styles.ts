@@ -1,8 +1,9 @@
+// src/components/LocDashboard/styles.ts
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding: 32px;
-  min-height: calc(100vh - 160px);
+  padding: 20px 18px;
+  min-height: calc(100vh - 140px);
   background: linear-gradient(180deg,#f7f8fc 0%, #fff 100%);
 `;
 
@@ -30,10 +31,14 @@ export const Card = styled.div`
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 20px;
+  grid-template-columns: 340px 1fr;
+  gap: 28px;
   align-items: start;
   grid-auto-rows: auto;
+  width: 100%;
+  @media (max-width: 1200px) {
+    grid-template-columns: 300px 1fr;
+  }
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
@@ -41,11 +46,11 @@ export const Grid = styled.div`
 
 export const ChartRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 360px;
+  grid-template-columns: 1fr 460px;
   gap: 16px;
   margin-bottom: 16px;
   align-items: start;
-  grid-column: 2 / 3; /* place ChartRow in main (second) grid column */
+
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
   }
@@ -53,18 +58,13 @@ export const ChartRow = styled.div`
 
 export const ChartArea = styled.div`
   display: grid;
-  /* Two-column layout: left column stacks Top Modules and Table; right column holds Language Distribution. */
-  grid-template-columns: 1fr 1fr;
-  /* let rows size to their content so cards fit naturally */
+  grid-template-columns: 2fr 1fr;   /* 左右比例更均匀 */
   grid-template-rows: auto auto;
-  grid-auto-rows: auto;
   gap: 28px;
-  grid-template-columns: 1.25fr 0.75fr; /* left area wider, right area for pie */
   width: 100%;
   align-items: stretch;
-  justify-items: stretch;
-  min-height: 320px; /* minimal room; rows will expand with content */
-  /* Layout: left column stacks two cards; right column spans both rows for the pie */
+  min-height: 420px;
+
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;

@@ -1,29 +1,19 @@
+// src/common/Container/styles.ts
 import styled from "styled-components";
 
-export const StyledContainer = styled("div")<{
-  border?: boolean;
-}>`
-  position: relative;
+export const StyledContainer = styled.div<{ border?: boolean }>`
   width: 100%;
   max-width: 1200px;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 0 60px;
+  margin-inline: auto;
+  padding-inline: 60px;
+  position: relative;
 
-  border-top: ${(p) => (p.border ? "1px solid #CDD1D4" : "")};
+  border-top: ${(p) => (p.border ? "1px solid #CDD1D4" : "none")};
 
-  @media only screen and (max-width: 1024px) {
-    max-width: calc(100% - 68px);
-    padding: 0 30px;
+  @media (max-width: 1024px) {
+    padding-inline: 30px;
   }
-
-  @media only screen and (max-width: 768px) {
-    max-width: calc(100% - 38px);
-    padding: 0 18px;
-  }
-
-  @media only screen and (max-width: 414px) {
-    max-width: 100%;
-    padding: 0 18px;
+  @media (max-width: 768px) {
+    padding-inline: 18px;
   }
 `;
